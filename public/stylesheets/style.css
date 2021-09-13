@@ -1,0 +1,14 @@
+:root {
+  --major: #fe6a16;
+  --major-dark: #ea4006;
+}
+
+/* NavBar */
+.navbar .navbar-brand {
+  color: var(--major);
+}
+
+.navbar-brand img {
+  max-height: 2.5rem;
+  margin: 0 10px 0 15px;
+}

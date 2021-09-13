@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="zh-hant-TW">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>短網址產生器</title>
+  <link rel="icon" href="/images/link.svg" type="image/x-icon">
+  {{!-- Bootstrap 5.1.1 --}}
+  <link rel="stylesheet" href="/stylesheets/bootstrap.css">
+  <link rel="stylesheet" href="/stylesheets/style.css">
+</head>
+
+<body>
+  {{!-- NavBar --}}
+  <nav class="navbar navbar-light bg-light">
+    <div class="container-fluid">
+      <a class="navbar-brand" href="/">
+        <img src="/images/link.svg" alt="Logo" class="d-inline-block">
+        短網址產生器
+      </a>
+    </div>
+  </nav>
+
+<main>
+  {{{body}}}
+</main>
+
+  {{!-- Bootstrap 5.1.1 use Popper 2.9.3 --}}
+  <script src="/javascripts/popper.min.js"></script>
+  <script src="/javascripts/bootstrap.js"></script>
+</body>
+
+</html>

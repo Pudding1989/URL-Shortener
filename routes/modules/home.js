@@ -4,7 +4,7 @@ const router = express.Router()
 const Link = require('../../models/link')
 
 router.get('/', (req, res) => {
-  res.send('Router is operating')
+  res.render('index')
 })
 
 module.exports = router
