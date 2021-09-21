@@ -1,14 +1,321 @@
 :root {
   --major: #fe6a16;
   --major-dark: #ea4006;
+  --theme-brown: #652a08;
+  --theme-brown-light: #983f0d;
+  --theme-white: #fef0e7;
+  --theme-white-smoke: #fee1d0;
+
+  --width-svg: 24px;
+  --round-input: 46px;
+}
+
+::selection{
+  background-color: var(--theme-white-smoke);
+  color: var(--theme-brown-light);
+}
+
+main {
+  min-width: 576px;
+  margin: 5vh 2.5vw;
 }
 
 /* NavBar */
 .navbar .navbar-brand {
-  color: var(--major);
+  color: var(--major-dark);
+}
+
+.navbar .navbar-brand:hover {
+  color: var(--theme-brown-light);
 }
 
 .navbar-brand img {
   max-height: 2.5rem;
   margin: 0 10px 0 15px;
+}
+
+main h1 {
+  text-align: center;
+  color: var(--major-dark);
+}
+
+main img {
+  display: block;
+  margin: 2.5rem auto;
+  width: 20vw;
+  min-width: 128px;
+  max-width: 256px;
+  filter: drop-shadow(-0.25rem 0.75rem 0.5rem rgba(0, 0, 0, 20%));
+  /* filter: drop-shadow(0 4px 4px rgba(64, 60, 67, 16%)); */
+}
+
+main form {
+  max-width: 65%;
+  margin: 2rem auto 1.5rem;
+}
+
+.form-floating {
+  display: flex;
+}
+
+.form-floating label {
+  color: var(--major-dark);
+  padding-left: calc(var(--round-input) + 2px);
+}
+
+.form-floating .form-control {
+  font-size: 1.2rem;
+  color: var(--theme-brown-light);
+  border-radius: var(--round-input);
+
+  /* 避開圓弧區域 */
+  padding-left: calc(var(--round-input) + 2px);
+  /* 圓弧區域 + 按鈕寬度 * 1.5倍  */
+  padding-right: calc(var(--round-input) + 1.5 * var(--width-svg) + 2px);
+  /* 用陰影代替border，為--theme-brown */
+  box-shadow: 0 1px 6px rgba(101, 42, 8, 28%);
+
+  /* 調整 bootstrap 「.is-invalid 」 預設驚嘆號位置 */
+  /* 對齊輸入文字 */
+  background-position: left calc(var(--width-svg) * 0.8) bottom 30%;
+  transition: border 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+}
+
+.form-control.is-invalid {
+  color: crimson;
+  border-color: #dc3545;
+}
+
+.form-control:focus {
+  border: 1px solid var(--major-dark);
+  box-shadow: 0 0 0 0.25rem rgba(254, 106, 22, 0.25);
+}
+
+.form-floating button {
+  position: absolute;
+  align-self: center;
+  right: calc(1 * var(--width-svg));
+  /* 清除 bootstrap 「.btn 」設定 */
+  border: none;
+  padding: 0;
+}
+
+.form-floating button:hover {
+  animation: zoom 0.575s ease-in-out;
+}
+
+@keyframes zoom {
+  0%,
+  100% {
+    transform: scale(1);
+  }
+  30% {
+    transform: scale(0.8);
+  }
+  40% {
+    transform: scale(1.35);
+  }
+  60% {
+    transform: scale(0.85);
+  }
+  85% {
+    transform: scale(1.2);
+  }
+}
+
+svg.link-fill {
+  fill: var(--theme-brown-light);
+  width: var(--width-svg);
+  height: var(--width-svg);
+  transition: all 0.25s ease-in-out;
+}
+
+svg.link-fill.active {
+  fill-opacity: 100%;
+  fill: var(--major);
+  width: calc(var(--width-svg) * 1.15);
+  animation: shake 0.65s ease-in;
+  transform-origin: center center;
+}
+
+@keyframes shake {
+  0%,
+  100% {
+    transform: rotate(0deg);
+  }
+  20% {
+    transform: rotate(-15deg);
+  }
+  40% {
+    transform: rotate(15deg);
+  }
+  60% {
+    transform: rotate(-5deg);
+  }
+  80% {
+    transform: rotate(5deg);
+  }
+}
+
+svg.clear {
+  visibility: hidden;
+  fill: var(--theme-brown);
+  width: var(--width-svg);
+  height: var(--width-svg);
+  fill-opacity: 0%;
+
+  position: absolute;
+  /* link-fill寬度 ＋ 1.5倍按鈕寬度  */
+  right: calc(1 * var(--width-svg) + 1.5 * var(--width-svg));
+  /* 對齊數入文字 */
+  bottom: 15%;
+  transition: all 0.25s ease-out;
+}
+
+svg.clear.visible {
+  visibility: visible;
+  fill-opacity: 40%;
+}
+
+svg.clear.visible:hover {
+  fill-opacity: 65%;
+}
+
+/* 輸入錯誤提示 */
+.invalid-hint {
+  visibility: hidden;
+  font-size: 0.85rem;
+  color: Crimson;
+  opacity: 0%;
+  margin-top: 0.6rem;
+  /* 避開圓弧區域，對齊輸入文字 */
+  margin-left: calc(var(--round-input) * 0.7);
+  transition: all 0.25s ease-out;
+}
+
+.invalid-hint span {
+  color: Gray;
+}
+
+.invalid-hint.visible {
+  visibility: visible;
+  opacity: 100%;
+}
+
+/* 轉換結果訊息排版 */
+main .alert {
+  max-width: 65%;
+  margin: 0 auto 5rem;
+}
+
+/* 轉換成功訊息 */
+.alert-major {
+  color: var(--theme-brown);
+  background-color: var(--theme-white);
+  border-color: var(--theme-white-smoke);
+  /* bootstrap alert 預設排版 */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  animation: zoom 0.575s ease-in-out;
+}
+
+.alert-major .alert-context {
+  display: flex;
+  align-items: center;
+  margin-right: 0.5rem;
+}
+
+.alert-major a {
+  color: var(--major-dark);
+  word-break: break-all;
+}
+
+/* 轉換失敗訊息 */
+.alert-warning {
+  animation: vibrate 0.75s ease-out;
+  display: flex;
+  align-items: center;
+}
+
+@keyframes vibrate {
+  10%,
+  90% {
+    transform: translate(-2%, 0);
+  }
+
+  20%,
+  80% {
+    transform: translate(4%, 0);
+  }
+
+  30%,
+  70% {
+    transform: translate(-4%, 0);
+  }
+
+  40%,
+  60% {
+    transform: translate(10%, 0);
+  }
+
+  50% {
+    transform: translate(-10%, 0);
+  }
+}
+
+
+/* 滑動按鈕組合 */
+/* 取消border，避免對齊誤差 */
+.alert .btn {
+  border: none;
+  /* 修正Safari高度 */
+  word-break: keep-all;
+}
+
+.btn-copy {
+  background-color: var(--major);
+  color: var(--theme-white);
+  position: relative;
+  overflow: hidden;
+  width: calc(3 * var(--width-svg));
+}
+
+.btn-copy:hover {
+  background-color: var(--major-dark);
+  color: white;
+  animation: shake 0.65s ease-in;
+  transform-origin: 30% 20%;
+}
+
+.btn-copy:focus {
+  box-shadow: 0 0 0 0.25rem rgba(254, 106, 22, 0.5);
+}
+
+.btn-copy.disable {
+  pointer-events: none;
+}
+
+.btn-muted {
+  background-color: var(--theme-brown-light);
+  color: var(--theme-white-smoke);
+  position: absolute;
+  width: calc(3 * var(--width-svg));
+  transition: left 0.45s;
+  top: 0%;
+  left: calc(-3 * var(--width-svg));
+}
+
+.btn-muted.slide {
+  pointer-events: none;
+  left: 0%;
+}
+
+/* Bootstrap X-Small RWD */
+@media screen and (max-width: 576px){
+
+.form-floating .form-control {
+  font-size: 1rem;
+}
+
 }
