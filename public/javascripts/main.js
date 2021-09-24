@@ -3,6 +3,9 @@ const submitBtn = document.querySelector('.btn')
 const btnSVG = document.querySelector('.link-fill')
 const clear = document.querySelector('.clear')
 const hint = document.querySelector('.invalid-hint')
+const copy = document.querySelector('.btn-copy')
+const muted = document.querySelector('.btn-muted')
+const link = document.querySelector('.shortenUrl')
 
 const rule = /^(https?:\/\/)\S*\.(\S){2,}/
 
@@ -55,4 +58,16 @@ clear.addEventListener('click', () => {
   // 移除錯誤提示
   inputURL.classList.remove('is-invalid')
   hint.classList.remove('visible')
+})
+
+// 複製按鈕功能
+copy.addEventListener('click', () => {
+  navigator.clipboard.writeText(link.innerText)
+  copy.classList.add('disable')
+  muted.classList.add('slide')
+  // 自動恢復可點擊狀態
+  setTimeout(() => {
+    copy.classList.remove('disable')
+    muted.classList.remove('slide')
+  }, 2000)
 })
