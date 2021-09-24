@@ -127,11 +127,10 @@ svg.link-fill {
   fill: var(--theme-brown-light);
   width: var(--width-svg);
   height: var(--width-svg);
-  transition: all 0.25s ease-in-out;
+  transition: fill 0.25s ease-in-out, width 0.25s ease-in-out;
 }
 
 svg.link-fill.active {
-  fill-opacity: 100%;
   fill: var(--major);
   width: calc(var(--width-svg) * 1.15);
   animation: shake 0.65s ease-in;
@@ -169,7 +168,7 @@ svg.clear {
   right: calc(1 * var(--width-svg) + 1.5 * var(--width-svg));
   /* 對齊數入文字 */
   bottom: 15%;
-  transition: all 0.25s ease-out;
+  transition: fill-opacity 0.25s ease-out;
 }
 
 svg.clear.visible {
