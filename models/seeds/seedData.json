@@ -1,0 +1,22 @@
+[
+  {
+    "original": "https://www.apple.com/",
+    "shortenCode": "apple"
+  },
+  {
+    "original": "https://www.google.com/",
+    "shortenCode": "google"
+  },
+  {
+    "original": "https://tw.alphacamp.co/",
+    "shortenCode": "alpha"
+  },
+  {
+    "original": "https://www.mongodb.com/",
+    "shortenCode": "mongoDB"
+  },
+  {
+    "original": "https://www.heroku.com/",
+    "shortenCode": "heroku"
+  }
+]
