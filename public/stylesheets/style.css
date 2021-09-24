@@ -10,7 +10,7 @@
   --round-input: 46px;
 }
 
-::selection{
+::selection {
   background-color: var(--theme-white-smoke);
   color: var(--theme-brown-light);
 }
@@ -264,6 +264,10 @@ main .alert {
   }
 }
 
+.alert-danger {
+  animation: vibrate 0.75s ease-out;
+  text-align: center;
+}
 
 /* 滑動按鈕組合 */
 /* 取消border，避免對齊誤差 */
@@ -312,10 +316,8 @@ main .alert {
 }
 
 /* Bootstrap X-Small RWD */
-@media screen and (max-width: 576px){
-
-.form-floating .form-control {
-  font-size: 1rem;
-}
-
+@media screen and (max-width: 576px) {
+  .form-floating .form-control {
+    font-size: 1rem;
+  }
 }

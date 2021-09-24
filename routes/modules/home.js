@@ -53,6 +53,29 @@ router.post('/', async (req, res) => {
   }
 })
 
+// 短網址轉址
+router.get('/:shortenCode', async (req, res) => {
+  const shortenCode = req.params.shortenCode
+
+  const protocol = req.protocol
+  const host = req.get('host')
+  const path = req.path
+  try {
+    link = await Link.findOne({ shortenCode })
+
+    switch (link) {
+      case null:
+        const undefinedLink = `${protocol}://${host}${path}`
+        res.render('index', { undefinedLink })
+        break
+      
+      default:
+        res.redirect(link.original)
+        break
+    }
+  } catch (error) { console.log(`DataBase ERROR at Redirection Function:${error}`)}
+})
+
 module.exports = router
 
 // 函式
