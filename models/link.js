@@ -7,7 +7,7 @@ const linkSchema = new Schema({
     type: String,
     required: true
   },
-  shorten: {
+  shortenCode: {
     type: String,
     require: true
   }

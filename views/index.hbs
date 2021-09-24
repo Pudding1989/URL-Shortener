@@ -1,13 +1,13 @@
 <h1 class="">短網址產生器</h1>
 <img src="/images/backlink.svg" alt="Key Vision">
-<form action="POST">
+<form action="/" method="POST">
     <div class="form-floating">
-        <input type="url" class="form-control" pattern="(http|https)://.*" name="link" placeholder="這不會顯示">
+        <input type="url" class="form-control {{#if invalid }}is-invalid{{/if}}" pattern="(http|https)://.*" name="link" placeholder=" " {{#if inputUrl}}value="{{inputUrl}}"{{/if}} required>
         <label for="floatingInput">目標網址</label>
 
-        <button type="submit" class="btn" disabled>
+        <button type="submit" class="btn" {{#unless shortenUrl}}disabled{{/unless}}>
             {{!-- link-fill SVG --}}
-            <svg id="Capa_1" class="link-fill" enable-background="new 0 0 512 512" height="512" viewBox="0 0 512 512"
+            <svg id="Capa_1" class="link-fill {{#if shortenUrl}}active{{/if}}" enable-background="new 0 0 512 512" height="512" viewBox="0 0 512 512"
                 width="512" xmlns="http://www.w3.org/2000/svg">
                 <g>
                     <path
@@ -44,7 +44,7 @@
 
     </div>
 </form>
-
+{{#if shortenUrl}}
 {{!--短網址產生提示 --}}
 <div class="alert alert-major" role="alert">
     {{!-- check-circle-fill SVG --}}
@@ -56,16 +56,19 @@
         </svg>
         {{!-- check-circle-fill SVG --}}
         <div>
-            成功轉換短網址：<a href="https://www.apple.com/" target="_blank">https://www.apple.com/</a>
-
+            成功轉換短網址：<a href="{{shortenUrl}}" target="_blank">{{shortenUrl}}</a>
         </div>
     </div>
+
     {{!-- copy button --}}
     <button type="button" class="btn btn-copy">複製
         <span class="btn btn-muted">已複製</span>
     </button>
 </div>
+{{/if}}
+
 {{!-- 無法產生短網址提示 --}}
+{{#if invalid}}
 <div class="alert alert-warning" role="alert">
     <svg class="flex-shrink-0 me-2" width="24" height="24" fill="currentColor" viewBox="0 0 16 16" role="img"
         aria-label="Warning:">
@@ -76,4 +79,4 @@
         這個目標網址是無效的呦～
     </div>
 </div>
-
+{{/if}}
