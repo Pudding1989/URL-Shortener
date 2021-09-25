@@ -21,15 +21,17 @@ router.post('/', async (req, res) => {
   // 後端導入套件，再次驗證網址格式
   if (valid.isWebUri(inputUrl)) {
     let shortenUrl = ''
+    // 初始化產生隨機shortenCode，因為『no-case-declarations』從 switch case:null裡移出
+    let shortenCode = ''
+    let CheckDuplicate = null
+
     // 非同步
     try {
       // 尋找原始網址，回傳值為null或物件
-      let link = await Link.findOne({ original: inputUrl }).lean()
+      const link = await Link.findOne({ original: inputUrl }).lean()
       switch (link) {
         case null:
-          let shortenCode = ''
-          // 尋找重複縮網址代碼，確保執行一次用do-while
-          let CheckDuplicate = null
+          // 尋找重複短網址代碼，確保執行一次用do-while
           do {
             shortenCode = randomCode(5)
             CheckDuplicate = await Link.findOne({ shortenCode }).lean()
@@ -61,25 +63,26 @@ router.get('/:shortenCode', async (req, res) => {
   const host = req.get('host')
   const path = req.path
   try {
-    link = await Link.findOne({ shortenCode })
+    const link = await Link.findOne({ shortenCode })
+
+    const undefinedLink = `${protocol}://${host}${path}` // no-case-declarations, for switch case:null
 
     switch (link) {
       case null:
-        const undefinedLink = `${protocol}://${host}${path}`
         res.render('index', { undefinedLink })
         break
-      
+
       default:
         res.redirect(link.original)
         break
     }
-  } catch (error) { console.log(`DataBase ERROR at Redirection Function:${error}`)}
+  } catch (error) { console.log(`DataBase ERROR at Redirection Function:${error}`) }
 })
 
 module.exports = router
 
 // 函式
-function randomCode(codeLength = 5) {
+function randomCode (codeLength = 5) {
   let randomCode = ''
   const codeData = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ' + 'abcdefghijklmnopqrstuvwxyz' + '1234567890'
   for (let i = 0; i < codeLength; i++) {

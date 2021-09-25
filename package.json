@@ -16,5 +16,8 @@
     "express-handlebars": "^5.3.3",
     "mongoose": "^6.0.5",
     "valid-url": "^1.0.9"
+  },
+  "devDependencies": {
+    "standard": "^16.0.3"
   }
 }

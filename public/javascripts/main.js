@@ -15,17 +15,17 @@ inputURL.addEventListener('input', (event) => {
   inputURL.classList.remove('is-invalid')
   hint.classList.remove('visible')
 
-  let url = event.target.value
+  const url = event.target.value
   // 顯示刪除按鈕，不去除空白
   switch (url.length) {
     case 0:
       //  隱藏刪除按鈕
       clear.classList.remove('visible')
-      break;
+      break
     default:
       //  顯示刪除按鈕
       clear.classList.add('visible')
-      break;
+      break
   }
 
   // 判斷連結按鈕
@@ -40,7 +40,7 @@ inputURL.addEventListener('input', (event) => {
 
 // 切換焦點時，才判斷錯誤提示
 inputURL.addEventListener('change', (event) => {
-  let url = event.target.value
+  const url = event.target.value
   // 需有內容才顯示錯誤提示
   if (!rule.test(url) && url.trim().length) {
     inputURL.classList.add('is-invalid')
@@ -53,7 +53,7 @@ inputURL.addEventListener('change', (event) => {
 
 // 刪除按鈕功能
 clear.addEventListener('click', () => {
-  inputURL.value = ""
+  inputURL.value = ''
   clear.classList.remove('visible')
   // 移除錯誤提示
   inputURL.classList.remove('is-invalid')
