@@ -21,33 +21,31 @@ router.post('/', async (req, res) => {
   // 後端導入套件，再次驗證網址格式
   if (valid.isWebUri(inputUrl)) {
     let shortenUrl = ''
-    // 初始化產生隨機shortenCode，因為『no-case-declarations』從 switch case:null裡移出
-    let shortenCode = ''
-    let CheckDuplicate = null
 
     // 非同步
     try {
       // 尋找原始網址，回傳值為null或物件
       const link = await Link.findOne({ original: inputUrl }).lean()
-      switch (link) {
-        case null:
-          // 尋找重複短網址代碼，確保執行一次用do-while
-          do {
-            shortenCode = randomCode(5)
-            CheckDuplicate = await Link.findOne({ shortenCode }).lean()
-          } while (CheckDuplicate)
+      if (link) {
+        shortenUrl = `${protocol}://${host}${path}${link.shortenCode}`
+      } else {
+        // 初始化產生隨機shortenCode
+        let CheckDuplicate = null
+        let shortenCode = ''
+        // 尋找重複短網址代碼，確保執行一次用do-while
+        do {
+          shortenCode = randomCode(5)
+          CheckDuplicate = await Link.findOne({ shortenCode }).lean()
+        } while (CheckDuplicate)
 
-          await Link.create({ original: inputUrl, shortenCode })
+        await Link.create({ original: inputUrl, shortenCode })
 
-          shortenUrl = `${protocol}://${host}${path}${shortenCode}`
-          break
-
-        default:
-          shortenUrl = `${protocol}://${host}${path}${link.shortenCode}`
-          break
+        shortenUrl = `${protocol}://${host}${path}${shortenCode}`
       }
       res.render('index', { inputUrl, shortenUrl })
-    } catch (error) { console.log(`DataBase ERROR at POST Function:${error}`) }
+    } catch (error) {
+      console.log(`DataBase ERROR at POST Function:${error}`)
+    }
   } else {
     // 處理輸入網址格式錯誤
     const invalid = true
@@ -65,18 +63,15 @@ router.get('/:shortenCode', async (req, res) => {
   try {
     const link = await Link.findOne({ shortenCode })
 
-    const undefinedLink = `${protocol}://${host}${path}` // no-case-declarations, for switch case:null
-
-    switch (link) {
-      case null:
-        res.render('index', { undefinedLink })
-        break
-
-      default:
-        res.redirect(link.original)
-        break
+    if (link) {
+      res.redirect(link.original)
+    } else {
+      const undefinedLink = `${protocol}://${host}${path}`
+      res.render('index', { undefinedLink })
     }
-  } catch (error) { console.log(`DataBase ERROR at Redirection Function:${error}`) }
+  } catch (error) {
+    console.log(`DataBase ERROR at Redirection Function:${error}`)
+  }
 })
 
 module.exports = router
